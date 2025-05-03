@@ -1,0 +1,32 @@
+FROM python:3.9-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        gcc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --no-cache-dir flask
+
+# Copy script files
+COPY test_scripts/mock_pesalink_api.py /app/test_scripts/
+
+# Create a non-root user
+RUN useradd -m apiuser
+RUN chown -R apiuser:apiuser /app
+USER apiuser
+
+# Expose port
+EXPOSE 5000
+
+# Run the mock API server
+CMD ["python", "test_scripts/mock_pesalink_api.py"]

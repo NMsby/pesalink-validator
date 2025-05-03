@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  validator:
+    build: .
+    volumes:
+      - ./:/app
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./logs:/app/logs
+    environment:
+      - PESALINK_API_BASE_URL=${PESALINK_API_BASE_URL}
+      - PESALINK_API_KEY=${PESALINK_API_KEY}
+      - MAX_BATCH_SIZE=${MAX_BATCH_SIZE:-1000}
+      - WORKER_THREADS=${WORKER_THREADS:-10}
+      - ENABLE_PARALLEL_PROCESSING=${ENABLE_PARALLEL_PROCESSING:-True}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    command: ["--input", "/app/data/accounts.csv", "--output", "/app/output", "--format", "csv", "--pesalink"]
+
+  # Mock API service for testing (optional)
+  mock-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./test_scripts:/app/test_scripts
+    environment:
+      - PORT=5000
+    command: ["python", "test_scripts/mock_pesalink_api.py"]
