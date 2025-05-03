@@ -1,0 +1,22 @@
+# Core requirements
+requests>=2.28.1
+python-dotenv>=0.20.0
+pydantic>=1.9.1
+
+# Encryption
+cryptography>=37.0.4
+
+# Concurrent processing
+concurrent-futures>=3.1.0;python_version<"3.7"
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=3.0.0
+
+# Development
+black>=22.6.0
+isort>=5.10.1
+flake8>=5.0.0
+
+# Web server (for mock API)
+flask>=2.0.0
