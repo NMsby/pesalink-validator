@@ -2,6 +2,7 @@
 Client for interacting with the PesaLink Account Validation API.
 Handles account validation using the actual PesaLink API endpoints.
 """
+import os
 import logging
 import time
 import json
@@ -9,10 +10,10 @@ import requests
 from requests.exceptions import RequestException, Timeout, ConnectionError
 from typing import Dict, List, Optional, Any, Union
 
-import app.config as config
 from app.models.account import Account
 from app.models.validation_result import ValidationResult, ValidationStatus
 from app.utils.logger import LoggerMixin
+import app.config as config
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ class PesaLinkClient(LoggerMixin):
             str: API key
 
         Raises:
-            Exception: If the fetching API key fails
+            Exception: If fetching API key fails
         """
         try:
             self.logger.info("Fetching API key from PesaLink")
