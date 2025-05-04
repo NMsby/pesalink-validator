@@ -7,7 +7,7 @@ from typing import List, Dict, Any, Optional
 
 from app.core.validator import AccountValidator
 from app.models.account import Account
-from app.models.validation_result import ValidationResult
+from app.models.validation_result import ValidationResult, ValidationStatus
 from app.models.batch import Batch, BatchValidationResult
 from app.utils.logger import LoggerMixin
 import app.config as config
